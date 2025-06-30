@@ -6,8 +6,14 @@ plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
+val buildversion: String = if (project.hasProperty("version")) {
+    project.property("version") as String
+} else {
+    "unspecified"
+}
+
 group = "alepando.dev"
-version = "1.0.0-SNAPSHOT"
+version = buildversion
 
 repositories {
     mavenCentral()
