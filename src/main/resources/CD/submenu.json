@@ -1,0 +1,44 @@
+{
+  "title": "子菜单",
+  "externalTitle": "子菜单",
+  "canCloseWithEscape": true,
+  "pause": false,
+  "buttons": [
+    {
+      "label": "返回主菜单",
+      "x": 50,
+      "y": 50,
+      "width": 100,
+      "height": 20,
+      "action": {
+        "type": "OPEN_MENU",
+        "data": {
+          "menu": "example"
+        }
+      }
+    },
+    {
+      "label": "关闭菜单",
+      "x": 160,
+      "y": 50,
+      "width": 100,
+      "height": 20,
+      "action": {
+        "type": "MESSAGE",
+        "data": {
+          "message": "§c菜单已关闭！"
+        }
+      }
+    }
+  ],
+  "body": [
+    {
+      "type": "TEXT",
+      "content": "§e这是子菜单！\n§7你可以在这里添加更多功能。",
+      "x": 50,
+      "y": 100,
+      "width": 300,
+      "height": 40
+    }
+  ]
+} 

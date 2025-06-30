@@ -1,0 +1,87 @@
+{
+  "title": "按钮测试菜单",
+  "externalTitle": "按钮测试",
+  "canCloseWithEscape": true,
+  "pause": false,
+  "buttons": [
+    {
+      "label": "测试命令1",
+      "x": 50,
+      "y": 50,
+      "width": 100,
+      "height": 20,
+      "action": {
+        "type": "COMMAND",
+        "data": {
+          "command": "say 这是第一个测试命令",
+          "asConsole": true
+        }
+      }
+    },
+    {
+      "label": "测试命令2",
+      "x": 160,
+      "y": 50,
+      "width": 100,
+      "height": 20,
+      "action": {
+        "type": "COMMAND",
+        "data": {
+          "command": "time set day",
+          "asConsole": true
+        }
+      }
+    },
+    {
+      "label": "测试命令3",
+      "x": 270,
+      "y": 50,
+      "width": 100,
+      "height": 20,
+      "action": {
+        "type": "COMMAND",
+        "data": {
+          "command": "weather clear",
+          "asConsole": true
+        }
+      }
+    },
+    {
+      "label": "发送消息",
+      "x": 50,
+      "y": 80,
+      "width": 100,
+      "height": 20,
+      "action": {
+        "type": "MESSAGE",
+        "data": {
+          "message": "§a这是一个测试消息！"
+        }
+      }
+    },
+    {
+      "label": "给予物品",
+      "x": 160,
+      "y": 80,
+      "width": 100,
+      "height": 20,
+      "action": {
+        "type": "GIVE_ITEM",
+        "data": {
+          "material": "DIAMOND",
+          "amount": 1
+        }
+      }
+    }
+  ],
+  "body": [
+    {
+      "type": "TEXT",
+      "content": "§6按钮响应测试菜单\n§7点击按钮测试功能是否正常",
+      "x": 50,
+      "y": 120,
+      "width": 320,
+      "height": 40
+    }
+  ]
+} 
