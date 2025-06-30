@@ -2,9 +2,9 @@
 
 > 一个基于 [DialogPlugin](https://github.com/AlepandoCR/DialogPlugin) 框架开发的强大对话框菜单插件，支持可视化编辑器配置
 
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/Version-1.0.0-green.svg)](https://github.com/cxkcxkckx/DialogPlugin/releases)
-[![Minecraft](https://img.shields.io/badge/Minecraft-1.20+-orange.svg)](https://www.minecraft.net/)
+[![Minecraft](https://img.shields.io/badge/Minecraft-1.21.6+-orange.svg)](https://www.minecraft.net/)
 
 ## 📖 项目介绍
 
@@ -43,23 +43,17 @@ DialogPlugin 是一个专为 Minecraft 服务器设计的现代化对话框菜�
 ## 📦 安装说明
 
 ### 系统要求
-- **Minecraft 版本**：1.20+
-- **Java 版本**：Java 17+
-- **服务器类型**：Paper/Spigot
+- **Minecraft 版本**：1.21.6+
+- **Java 版本**：Java 21+
+- **服务器类型**：Paper 及其分支
 
 ### 安装步骤
 
-1. **下载插件**
-   ```bash
-   # 从 Releases 页面下载最新版本
-   wget https://github.com/cxkcxkckx/DialogPlugin/releases/latest/download/DialogPlugin.jar
-   ```
+1. **获取插件文件**
+   - 从项目 Releases 页面获取最新版本
 
 2. **安装到服务器**
-   ```bash
-   # 将插件文件放入 plugins 文件夹
-   cp DialogPlugin.jar /path/to/your/server/plugins/
-   ```
+   - 将插件文件放入服务器的 `plugins` 文件夹
 
 3. **启动服务器**
    ```bash
@@ -96,7 +90,8 @@ DialogPlugin 是一个专为 Minecraft 服务器设计的现代化对话框菜�
 
 ### 配置文件结构
 
-插件使用 JSON 格式的菜单配置文件，存储在 `plugins/DialogPlugin/menus/` 目录下。
+插件使用 JSON 格式的菜单配置文件，存储在 `plugins/DialogPlugin/CD/` 文件夹中。
+主配置文件 `config.yml` 也位于 `plugins/DialogPlugin/` 目录下。
 
 #### 基础菜单配置
 
@@ -129,6 +124,15 @@ DialogPlugin 是一个专为 Minecraft 服务器设计的现代化对话框菜�
       "y": 42,
       "width": 200,
       "height": 20
+    },
+    {
+      "type": "ITEM",
+      "content": "服务器特色物品",
+      "x": 150,
+      "y": 80,
+      "width": 50,
+      "height": 50,
+      "itemMaterial": "DIAMOND_SWORD"
     }
   ]
 }
@@ -180,6 +184,22 @@ DialogPlugin 是一个专为 Minecraft 服务器设计的现代化对话框菜�
 | `TEXT` | 文本显示 | `content`, `x`, `y`, `width`, `height` |
 | `ITEM` | 物品展示 | `content`, `x`, `y`, `width`, `height`, `itemMaterial` |
 
+#### 物品展示配置示例
+
+```json
+{
+  "type": "ITEM",
+  "content": "这是一个钻石剑",
+  "x": 150,
+  "y": 80,
+  "width": 50,
+  "height": 50,
+  "itemMaterial": "DIAMOND_SWORD"
+}
+```
+
+**注意**：物品展示功能目前仅支持基础物品材质显示，暂不支持自定义物品名称和描述。
+
 ## 🎨 可视化编辑器
 
 ### 在线编辑器
@@ -208,16 +228,21 @@ DialogPlugin 是一个专为 Minecraft 服务器设计的现代化对话框菜�
 ## 📁 文件结构
 
 ```
-plugins/DialogPlugin/
-├── config.yml              # 主配置文件
-├── menus/                  # 菜单配置目录
-│   ├── default.json        # 默认菜单
-│   └── ...                 # 其他菜单文件
-└── logs/                   # 日志目录
-    ├── actions.log         # 操作日志
-    ├── errors.log          # 错误日志
-    └── menu.log            # 菜单日志
+plugins/
+├── DialogPlugin/                  # 配置目录
+│   ├── CD/                        # 菜单目录
+│   │  ├── default.json            # 默认菜单
+│   │  ├── example.json            # 示例菜单
+│   │  ├── test_buttons.json       # 测试菜单
+│   │  └── submenu.json            # 子菜单
+│   └── config.yml                 # 配置文件
+└── DialogPlugin.jar               # 插件主文件
 ```
+
+### 配置文件结构
+
+插件使用 JSON 格式的菜单配置文件，存储在 `plugins/DialogPlugin/CD/` 文件夹中。
+主配置文件 `config.yml` 也位于 `plugins/DialogPlugin/` 目录下。
 
 ## 🔧 高级配置
 
@@ -228,32 +253,44 @@ plugins/DialogPlugin/
 # 作者: cxkcxkckx
 # 注意: 默认菜单名称为 "default"，使用 /ui 命令可直接打开 default.json 菜单
 
-# 日志配置
+# 日志设置
 logging:
-  enabled: true
-  level: INFO
-  file: logs/menu.log
+  # 是否在控制台输出详细日志
+  console: false
+  # 是否记录动作执行日志
+  actions: false
+  # 是否记录菜单操作日志
+  menu: false
+  # 是否记录错误日志
+  errors: false
 
-# 消息配置
+# 消息设置
 messages:
-  command_success: "§a命令执行成功: {command}"
-  command_failure: "§c执行命令时出错: {error}"
-  teleport_success: "§a传送成功到 {world}({x},{y},{z})"
-  teleport_failure: "§c传送时出错: {error}"
-  item_success: "§a已获得 {material} x{amount}"
-  item_failure: "§c给予物品时出错: {error}"
-  menu_not_found: "§c菜单 {menu} 不存在"
-  reload_success: "§a配置重载成功"
-  reload_failure: "§c配置重载失败: {error}"
+  # 是否向玩家发送动作执行成功消息
+  success: false
+  # 是否向玩家发送动作执行失败消息
+  failure: false
+  # 是否向玩家发送命令执行成功消息
+  command_success: false
+  # 是否向玩家发送传送成功消息
+  teleport_success: false
+  # 是否向玩家发送物品获得消息
+  item_success: false
 ```
 
 ### 配置选项说明
 
 | 选项 | 类型 | 默认值 | 描述 |
 |------|------|--------|------|
-| `logging.enabled` | Boolean | `true` | 是否启用日志记录 |
-| `logging.level` | String | `INFO` | 日志级别 |
-| `logging.file` | String | `logs/menu.log` | 日志文件路径 |
+| `logging.console` | Boolean | `false` | 是否在控制台输出详细日志 |
+| `logging.actions` | Boolean | `false` | 是否记录动作执行日志 |
+| `logging.menu` | Boolean | `false` | 是否记录菜单操作日志 |
+| `logging.errors` | Boolean | `false` | 是否记录错误日志 |
+| `messages.success` | Boolean | `false` | 是否发送动作执行成功消息 |
+| `messages.failure` | Boolean | `false` | 是否发送动作执行失败消息 |
+| `messages.command_success` | Boolean | `false` | 是否发送命令执行成功消息 |
+| `messages.teleport_success` | Boolean | `false` | 是否发送传送成功消息 |
+| `messages.item_success` | Boolean | `false` | 是否发送物品获得消息 |
 
 ## 🐛 故障排除
 
@@ -274,57 +311,20 @@ messages:
 - 检查文本内容格式
 - 验证宽度设置
 
-### 日志查看
+### 调试建议
 
-```bash
-# 查看菜单日志
-tail -f plugins/DialogPlugin/logs/menu.log
-
-# 查看错误日志
-tail -f plugins/DialogPlugin/logs/errors.log
-
-# 查看操作日志
-tail -f plugins/DialogPlugin/logs/actions.log
-```
-
-## 🤝 贡献指南
-
-我们欢迎社区贡献！如果你想为项目做出贡献，请：
-
-1. Fork 本仓库
-2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 开启 Pull Request
-
-### 开发环境
-
-```bash
-# 克隆仓库
-git clone https://github.com/cxkcxkckx/DialogPlugin.git
-
-# 进入项目目录
-cd DialogPlugin
-
-# 构建项目
-./gradlew build
-```
+- 启用 `config.yml` 中的日志选项来查看详细调试信息
+- 检查控制台输出的错误信息
+- 验证 JSON 配置文件的语法正确性
 
 ## 📄 许可证
 
-本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
+本项目采用 GPLv3 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
 
-## 🙏 致谢
-
-- **AlepandoCR** - 提供 [DialogPlugin 框架](https://github.com/AlepandoCR/DialogPlugin)
-- **Minecraft 社区** - 提供灵感和支持
-- **所有贡献者** - 帮助改进项目
-
-## 📞 联系方式
-
-- **GitHub**: [cxkcxkckx/DialogPlugin](https://github.com/cxkcxkckx/DialogPlugin)
-- **问题反馈**: [Issues](https://github.com/cxkcxkckx/DialogPlugin/issues)
-- **在线编辑器**: [dialog.1mc.dpdns.org](https://dialog.1mc.dpdns.org)
+GPLv3 许可证要求：
+- 任何基于本项目的衍生作品必须同样采用 GPLv3 许可证
+- 必须公开源代码
+- 必须保留原始版权声明
 
 ---
 
